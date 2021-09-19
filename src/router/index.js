@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import login from '../components/login.vue'
 import home from '../components/home.vue'
+import welcome from '../components/welcome.vue'
+import users from '../components/users/users.vue'
 
 Vue.use(VueRouter)
 
@@ -9,7 +11,16 @@ const router = new VueRouter({
         routes: [
             { path: '/', redirect: '/login' },
             { path: '/login', component: login },
-            { path: '/home', component: home }
+            {
+                path: '/home',
+                component: home,
+                /* 进入home页面自动跳转到welcome路由组件 */
+                redirect: "/welcome",
+                children: [
+                    { path: '/welcome', component: welcome },
+                    { path: '/users', component: users },
+                ]
+            }
         ]
     })
     /* 设置前置路由守卫来判断浏览器是否处于登录状态，利用token */
